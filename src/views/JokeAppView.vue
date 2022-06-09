@@ -1,6 +1,8 @@
 <template>
   <section class="section">
-    <div class="jokeApp">test</div>
+    <div class="joke" v-for="joke in getAllJokes" :key="joke.id">
+      {{ joke.joke }}
+    </div>
   </section>
 </template>
 
@@ -10,16 +12,20 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
 
 export default defineComponent({
   name: "JokeApp",
-  data: () => ({
-    people: "",
-  }),
+  mounted() {
+    this.fetchJokes();
+  },
+  computed: {
+    ...mapState("jokeApp", ["jokes"]),
+    ...mapGetters("jokeApp", ["getAllJokes"]),
+  },
   methods: {
-    kola() {
-      this.people = "4";
-    },
+    ...mapActions("jokeApp", ["fetchJokes"]),
+    ...mapMutations("jokeApp", ["updateJokes"]),
   },
 });
 </script>

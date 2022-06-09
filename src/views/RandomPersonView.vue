@@ -1,9 +1,11 @@
 <template>
   <section class="section section__random">
-    <div class="people">
-      <div v-for="person in people" :key="person.id">
-        <div class="person" :style="{ backgroundColor: `${person.random}` }">
-          {{ person.name }}
+    <div class="container">
+      <div class="people">
+        <div v-for="person in people" :key="person.id">
+          <div class="person" :style="{ backgroundColor: `${person.random}` }">
+            {{ person.name }}
+          </div>
         </div>
       </div>
     </div>

@@ -1,130 +1,60 @@
-import { createStore } from "vuex";
+import { Commit, createStore } from "vuex";
+import axios from "axios";
 
-type PersonType = {
+export type OneJoke = {
+  category: string;
+  type: string;
+  joke: string;
+  flags: {
+    nsfw: boolean;
+    religious: boolean;
+    political: boolean;
+    racist: boolean;
+    sexist: boolean;
+    explicit: boolean;
+  };
   id: number;
-  name: string;
-  chosen: false;
-  random: string;
+  safe: boolean;
+  lang: string;
+};
+
+export type BlackFlags = {
+  flags: ["nsfw", "religious", "political", "racist", "sexist", "explicit"];
+};
+
+export type Jokes = {
+  jokes: OneJoke[];
 };
 
 export default createStore({
   modules: {
-    randomPersonGenerator: {
+    jokeApp: {
       namespaced: true,
       state: {
-        people: [
-          {
-            id: 1,
-            name: "Alberts",
-            chosen: false,
-            random: "#" + ((Math.random() * 0xffffff) << 0).toString(16),
-          },
-          {
-            id: 2,
-            name: "Arnis",
-            chosen: false,
-            random: "#" + ((Math.random() * 0xffffff) << 0).toString(16),
-          },
-          {
-            id: 3,
-            name: "Artis",
-            chosen: false,
-            random: "#" + ((Math.random() * 0xffffff) << 0).toString(16),
-          },
-          {
-            id: 4,
-            name: "Artūrs",
-            chosen: false,
-            random: "#" + ((Math.random() * 0xffffff) << 0).toString(16),
-          },
-          {
-            id: 5,
-            name: "Bogdans",
-            chosen: false,
-            random: "#" + ((Math.random() * 0xffffff) << 0).toString(16),
-          },
-          {
-            id: 6,
-            name: "Edgars",
-            chosen: false,
-            random: "#" + ((Math.random() * 0xffffff) << 0).toString(16),
-          },
-          {
-            id: 7,
-            name: "Elvis",
-            chosen: false,
-            random: "#" + ((Math.random() * 0xffffff) << 0).toString(16),
-          },
-          {
-            id: 8,
-            name: "Haralds",
-            chosen: false,
-            random: "#" + ((Math.random() * 0xffffff) << 0).toString(16),
-          },
-          {
-            id: 9,
-            name: "Ieva",
-            chosen: false,
-            random: "#" + ((Math.random() * 0xffffff) << 0).toString(16),
-          },
-          {
-            id: 10,
-            name: "Inta",
-            chosen: false,
-            random: "#" + ((Math.random() * 0xffffff) << 0).toString(16),
-          },
-          {
-            id: 11,
-            name: "Ilona",
-            chosen: false,
-            random: "#" + ((Math.random() * 0xffffff) << 0).toString(16),
-          },
-          {
-            id: 12,
-            name: "Jānis",
-            chosen: false,
-            random: "#" + ((Math.random() * 0xffffff) << 0).toString(16),
-          },
-          {
-            id: 13,
-            name: "Niklāvs",
-            chosen: false,
-            random: "#" + ((Math.random() * 0xffffff) << 0).toString(16),
-          },
-          {
-            id: 14,
-            name: "Ņikita",
-            chosen: false,
-            random: "#" + ((Math.random() * 0xffffff) << 0).toString(16),
-          },
-          {
-            id: 15,
-            name: "Regīna",
-            chosen: false,
-            random: "#" + ((Math.random() * 0xffffff) << 0).toString(16),
-          },
-          {
-            id: 16,
-            name: "Ričards",
-            chosen: false,
-            random: "#" + ((Math.random() * 0xffffff) << 0).toString(16),
-          },
-          {
-            id: 17,
-            name: "Rihards",
-            chosen: false,
-            random: "#" + ((Math.random() * 0xffffff) << 0).toString(16),
-          },
-          {
-            id: 18,
-            name: "Roberts",
-            chosen: false,
-            random: "#" + ((Math.random() * 0xffffff) << 0).toString(16),
-          },
-        ] as PersonType[],
+        jokes: {} as Jokes,
       },
-      actions: {},
-      mutations: {},
+      actions: {
+        async fetchJokes({ commit }: { commit: Commit }) {
+          try {
+            const result = await axios.get(
+              "https://v2.jokeapi.dev/joke/Programming?type=single&amount=10"
+            );
+            commit("updateJokes", result.data);
+          } catch (error) {
+            alert(error);
+          }
+        },
+      },
+      mutations: {
+        updateJokes(state: { jokes: Jokes }, jokes: Jokes) {
+          state.jokes = jokes;
+        },
+      },
+      getters: {
+        getAllJokes(state: { jokes: Jokes }) {
+          return state.jokes.jokes;
+        },
+      },
     },
   },
 });

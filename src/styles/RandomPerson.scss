@@ -1,3 +1,10 @@
+.container {
+  height: 510px;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+}
+
 .people {
   display: flex;
   flex-direction: row;
@@ -5,7 +12,6 @@
   gap: 30px;
   justify-content: center;
   align-items: center;
-  height: 510px;
 }
 
 .person {
@@ -20,7 +26,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 19px 38px, rgba(0, 0, 0, 0.22) 0 15px 12px;
   text-shadow: -1px -1px 0 #000,-1px 1px 0 #000,1px -1px 0 #000,1px 1px 0 #000;
 }
 
@@ -35,7 +41,7 @@
   font-size: 22px;
   font-weight: bold;
   text-align: center;
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 19px 38px, rgba(0, 0, 0, 0.22) 0 15px 12px;
 
   &:hover {
     opacity: 0.8;
@@ -70,5 +76,6 @@
 }
 
 .section__random {
+  font-family: 'Cookie', cursive;
   padding-top: 0;
 }
